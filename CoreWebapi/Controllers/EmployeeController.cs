@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreWebapi.Controllers
 {
-    [Route("api/")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
@@ -12,19 +11,28 @@ namespace CoreWebapi.Controllers
         {
             _employeeService = employeeService;
         }
-        [HttpGet()]
+        [HttpGet("api/Employee")]
         public async Task<IActionResult> GetEmployees()
         {
-            var employees = await _employeeService.GetEmployees();
-            if (employees.Count == 0)
+            try
             {
-                return NotFound("Employees not exist");
+                var employees = await _employeeService.GetEmployees();
+                if (employees.Count == 0)
+                {
+                    return NotFound("Employees not exist");
+                }
+
+
+                return this.Ok(employees);
             }
+            catch (Exception ex)
+            {
 
-
-            return this.Ok(employees);
+                throw;
+            }
+        
         }
-        [HttpGet("Employee/{id}")]
+        [HttpGet("api/Employee/{id}")]
         public async Task<IActionResult> GetEmployees(int id)
         {
             var employee = await _employeeService.GetEmployee(id);
@@ -36,7 +44,7 @@ namespace CoreWebapi.Controllers
 
             return this.Ok(employee);
         }
-        [HttpPost("Employee")]
+        [HttpPost("api/Employee")]
         public async Task<IActionResult> CreateEmployee( [FromBody] Employee employee)
         {
             try
@@ -54,7 +62,7 @@ namespace CoreWebapi.Controllers
 
         }
 
-        [HttpPut("Employee/{id}")]
+        [HttpPut("api/Employee/{id}")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
         {
             try
@@ -78,7 +86,7 @@ namespace CoreWebapi.Controllers
             }
 
         }
-        [HttpDelete("Employee/{id}")]
+        [HttpDelete("api/Employee/{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             try

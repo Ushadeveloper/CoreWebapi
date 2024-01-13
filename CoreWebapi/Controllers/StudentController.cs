@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreWebapi.Controllers
 {
-    [Route("api/Student")]
+    [Route("api")]
     public class StudentController : Controller
     {
         private List<Student> listStudent;
@@ -39,12 +39,12 @@ namespace CoreWebapi.Controllers
             students.Add(student3);
             return students;
         }
-        [HttpGet()]
+        [HttpGet("Student")]
         public async Task<IActionResult> GetStudents()
         {
             return this.Ok(listStudent);
         }
-        [HttpGet("/{id}")]
+        [HttpGet("Student/{id}")]
         public async Task<IActionResult> GetStudent(int id)
         {
            // var student = listStudent.Where(x => x.Id==id).FirstOrDefault();
@@ -56,7 +56,7 @@ namespace CoreWebapi.Controllers
 
             return this.Ok(student);
         }
-        [HttpPost()]
+        [HttpPost("Student")]
         public async Task<IActionResult> SaveNewStudent([FromBody] Student student)
         {
             try
@@ -72,7 +72,7 @@ namespace CoreWebapi.Controllers
             }
             
         }
-        [HttpPut("/{id}")]
+        [HttpPut("Student/{id}")]
         public async Task<IActionResult> UpdateStudent(int id,[FromBody] Student student)
         {
             try
@@ -97,7 +97,7 @@ namespace CoreWebapi.Controllers
             }
 
         }
-        [HttpDelete("/{id}")]
+        [HttpDelete("Student/{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
             try
